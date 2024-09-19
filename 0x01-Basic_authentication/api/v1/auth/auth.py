@@ -22,11 +22,15 @@ class Auth:
             return True
         return False
 
-    def authorization_header(self, request=None) -> None:
+    def authorization_header(self, request=None) -> str:
         """
-        authorize header
+        validate all requests to secure the API
         """
-        return None
+        key = 'Authorization'
+        
+        if request is None or key not in request.headers:
+            return None
+        return request.headers.get(key)
 
     def current_user(self, request=None) -> None:
         """
@@ -45,5 +49,4 @@ if __name__ == '__main__':
     print(a.require_auth("/api/v1/status/", ["/api/v1/status/"]))
     print(a.require_auth("/api/v1/status", ["/api/v1/status/"]))
     print(a.require_auth("/api/v1/users", ["/api/v1/status/"]))
-    print(a.require_auth("/api/v1/users", ["/api/v1/status/",
-                                           "/api/v1/stats"]))
+    print(a.require_auth("/api/v1/users", ["/api/v1/status/", "/api/v1/stats"]))
