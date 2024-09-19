@@ -12,17 +12,11 @@ class BasicAuth(Auth):
     class for Baic Authorization
     """
     def extract_base64_authorization_header(self,
-                                            authorization_header: str
-                                            ) -> str:
+                                            authorization_header: Optional[str]
+                                            ) -> Optional[str]:
         """
-        Extracts the Base64 part of the Authorization header.
-
-        Args:
-            authorization_header (str): The full authorization header string.
-
-        Returns:
-            str: The Base64-encoded part of the Authorization header.
-            None: If the authorization header is invalid or None.
+         returns the Base64 part of
+         the Authorization header for a Basic Authentication
         """
         if authorization_header is None:
             return None
@@ -33,17 +27,10 @@ class BasicAuth(Auth):
         return authorization_header.split(' ')[1]
 
     def decode_base64_authorization_header(self,
-                                           base64_authorization_header: str
-                                           ) -> str:
+                                           base64_authorization_header: Optional[str]
+                                           ) -> Optional[str]:
         """
-        Decodes the Base64 part of the Authorization header.
-
-        Args:
-            base64_authorization_header (str): The Base64 string to decode.
-
-        Returns:
-            str: Decoded string if Base64 is valid.
-            None: If the string is invalid or cannot be decoded.
+        returns the decoded value of a Base64 string
         """
         if base64_authorization_header is None:
             return None
@@ -57,17 +44,11 @@ class BasicAuth(Auth):
         return decoded_base64
     
     def extract_user_credentials(self,
-                                 decoded_base64_authorization_header: str
-                                 ) -> (str, str):
+                                 decoded_base64_authorization_header: Optional[str]
+                                 ) -> tuple[Optional[str], Optional[str]]:
         """
-        Extracts the Base64 part of the Authorization header.
-
-        Args:
-            authorization_header (str): The full authorization header string.
-
-        Returns:
-            str: The Base64-encoded part of the Authorization header.
-            None: If the authorization header is invalid or None.
+        returns the user email and password
+        from the Base64 decoded value
         """
         if decoded_base64_authorization_header is None:
             return None, None
