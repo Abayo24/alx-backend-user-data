@@ -40,7 +40,7 @@ class BasicAuth(Auth):
             encoded_base64 = b64decode(base64_authorization_header)
             decoded_base64 = encoded_base64.decode('utf-8')
         except (Exception):
-            return
+            return None
         return decoded_base64
     
     def extract_user_credentials(self,
@@ -59,7 +59,6 @@ class BasicAuth(Auth):
         user, pwd = decoded_base64_authorization_header.split(":")
         return user, pwd
         
-
 
 if __name__ == "__main__":
     """main"""
