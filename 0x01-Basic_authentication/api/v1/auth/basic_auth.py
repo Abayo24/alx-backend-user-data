@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Basic auth
+Module for Basic authorization
 """
 from auth import Auth
 from typing import Optional
@@ -9,7 +9,7 @@ from base64 import b64decode
 
 class BasicAuth(Auth):
     """
-    Baic Auth
+    class for Baic Authorization
     """
     def extract_base64_authorization_header(self,
                                             authorization_header: str
