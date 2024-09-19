@@ -9,6 +9,10 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
+@app.route('/api/v1/status', methods=['GET'])
+def status():
+    return jsonify({"status": "OK"})
+
 @app.errorhandler(401)
 def unauthorized_error(error):
     """Return 401 error"""
