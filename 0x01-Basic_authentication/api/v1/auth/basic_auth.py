@@ -5,7 +5,6 @@ This module provides methods to decode Base64 credentials
 and extract user information for basic HTTP authentication.
 """
 from auth import Auth
-from typing import Optional, Tuple
 from base64 import b64decode
 
 
@@ -15,8 +14,8 @@ class BasicAuth(Auth):
     Basic Authentication through Base64-encoded credentials.
     """
     def extract_base64_authorization_header(self,
-                                            authorization_header: Optional[str]
-                                            ) -> Optional[str]:
+                                            authorization_header: str
+                                            ) -> str:
         """
         Extracts the Base64 part of the Authorization header.
 
@@ -37,7 +36,7 @@ class BasicAuth(Auth):
 
     def decode_base64_authorization_header(self,
                                            base64_authorization_header: str
-                                           ) -> Optional[str]:
+                                           ) -> str:
         """
         Decodes the Base64 part of the Authorization header.
 
@@ -55,13 +54,13 @@ class BasicAuth(Auth):
         try:
             encoded_base64 = b64decode(base64_authorization_header)
             decoded_base64 = encoded_base64.decode('utf-8')
+            return decoded_base64
         except (Exception):
             return None
-        return decoded_base64
 
     def extract_user_credentials(self,
                                  decoded_base64_authorization_header: str
-                                 ) -> Tuple[Optional[str], Optional[str]]:
+                                 ) -> (str, str):
         """
         Extracts the user email and password from the Base64 decoded value.
 
