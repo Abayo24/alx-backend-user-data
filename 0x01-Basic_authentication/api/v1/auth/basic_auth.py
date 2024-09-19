@@ -80,14 +80,3 @@ class BasicAuth(Auth):
             return None, None
         user, pwd = decoded_base64_authorization_header.split(":")
         return user, pwd
-        
-
-if __name__ == "__main__":
-    """main"""
-    a = BasicAuth()
-
-    print(a.extract_user_credentials(None))
-    print(a.extract_user_credentials(89))
-    print(a.extract_user_credentials("Holberton School"))
-    print(a.extract_user_credentials("Holberton:School"))
-    print(a.extract_user_credentials("bob@gmail.com:toto1234"))
