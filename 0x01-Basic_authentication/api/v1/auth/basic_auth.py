@@ -1,22 +1,31 @@
 #!/usr/bin/env python3
 """
-Module for Basic authorization
+Module for Basic Authorization handling.
+This module provides methods to decode Base64 credentials
+and extract user information for basic HTTP authentication.
 """
 from auth import Auth
-from typing import Optional
+from typing import Optional, Tuple
 from base64 import b64decode
 
 
 class BasicAuth(Auth):
     """
-    class for Baic Authorization
+    BasicAuth class that implements methods for handling
+    Basic Authentication through Base64-encoded credentials.
     """
     def extract_base64_authorization_header(self,
                                             authorization_header: Optional[str]
                                             ) -> Optional[str]:
         """
-         returns the Base64 part of
-         the Authorization header for a Basic Authentication
+        Extracts the Base64 part of the Authorization header.
+
+        Args:
+            authorization_header (str): The full authorization header string.
+
+        Returns:
+            str: The Base64-encoded part of the Authorization header.
+            None: If the authorization header is invalid or None.
         """
         if authorization_header is None:
             return None
@@ -30,7 +39,14 @@ class BasicAuth(Auth):
                                            base64_authorization_header: Optional[str]
                                            ) -> Optional[str]:
         """
-        returns the decoded value of a Base64 string
+        Decodes the Base64 part of the Authorization header.
+
+        Args:
+            base64_authorization_header (str): The Base64 string to decode.
+
+        Returns:
+            str: Decoded string if Base64 is valid.
+            None: If the string is invalid or cannot be decoded.
         """
         if base64_authorization_header is None:
             return None
@@ -45,10 +61,16 @@ class BasicAuth(Auth):
     
     def extract_user_credentials(self,
                                  decoded_base64_authorization_header: Optional[str]
-                                 ) -> tuple[Optional[str], Optional[str]]:
+                                 ) -> Tuple[Optional[str], Optional[str]]:
         """
-        returns the user email and password
-        from the Base64 decoded value
+        Extracts the user email and password from the Base64 decoded value.
+
+        Args:
+            decoded_base64_authorization_header (str): The decoded Base64 string.
+
+        Returns:
+            tuple: A tuple containing the user email and password.
+            None, None: If the decoded string is invalid or not in the expected format.
         """
         if decoded_base64_authorization_header is None:
             return None, None
