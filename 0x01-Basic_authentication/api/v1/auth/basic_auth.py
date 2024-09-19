@@ -18,11 +18,11 @@ class BasicAuth(Auth):
         """
         if authorization_header is None:
             return None
-        if not isinstance(autorization_header, str):
+        if not isinstance(authorization_header, str):
             return None
         if not authorization_header.startswith("Basic "):
             return None
-        return authorization_header.split(' ')[1] if len(authorization_header) > len("Basic ") else None
+        return authorization_header.split(' ')[1]
 
 
 if __name__ == "__main__":
