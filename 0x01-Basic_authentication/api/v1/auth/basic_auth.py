@@ -4,7 +4,7 @@ Module for Basic Authorization handling.
 This module provides methods to decode Base64 credentials
 and extract user information for basic HTTP authentication.
 """
-from auth import Auth
+from api.v1.auth.auth import Auth
 from base64 import b64decode
 
 
