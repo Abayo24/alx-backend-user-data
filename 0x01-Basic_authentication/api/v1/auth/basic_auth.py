@@ -45,6 +45,7 @@ class BasicAuth(Auth):
 
 
 if __name__ == "__main__":
+    """main"""
     a = BasicAuth()
 
     print(a.decode_base64_authorization_header(None))
