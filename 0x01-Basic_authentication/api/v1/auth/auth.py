@@ -27,7 +27,7 @@ class Auth:
         validate all requests to secure the API
         """
         key = 'Authorization'
-        
+
         if request is None or key not in request.headers:
             return None
         return request.headers.get(key)
