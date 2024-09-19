@@ -14,6 +14,12 @@ class Auth:
         """
         checks if authentication is required
         """
+        if path and not path.endswith('/'):
+            path = path + '/'
+        if excluded_paths is None or excluded_paths == []:
+            return True
+        if path not in excluded_paths or path is None:
+            return True
         return False
 
     def authorization_header(self, request=None) -> None:
@@ -33,6 +39,10 @@ if __name__ == '__main__':
     """main"""
     a = Auth()
 
+    print(a.require_auth(None, None))
+    print(a.require_auth(None, []))
+    print(a.require_auth("/api/v1/status/", []))
     print(a.require_auth("/api/v1/status/", ["/api/v1/status/"]))
-    print(a.authorization_header())
-    print(a.current_user())
+    print(a.require_auth("/api/v1/status", ["/api/v1/status/"]))
+    print(a.require_auth("/api/v1/users", ["/api/v1/status/"]))
+    print(a.require_auth("/api/v1/users", ["/api/v1/status/", "/api/v1/stats"]))
