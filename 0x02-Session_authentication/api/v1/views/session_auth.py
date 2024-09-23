@@ -14,10 +14,10 @@ def login():
     from api.v1.app import auth
     email = request.form.get('email')
     if not email:
-        return jsonify({ "error": "email missing" }), 400
+        return jsonify({"error": "email missing"}), 400
     password = request.form.get('password')
     if not password:
-        return jsonify({ "error": "password missing" }), 400
+        return jsonify({"error": "password missing"}), 400
     try:
         users = User.search({"email": email})
     except Exception:
@@ -39,4 +39,4 @@ def login():
 
         response.set_cookie(session_name, session_id)
 
-        return response 
+        return response
