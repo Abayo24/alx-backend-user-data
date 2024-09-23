@@ -19,7 +19,7 @@ class SessionExpAuth(SessionAuth):
         sess_duration = getenv('SESSION_DURATION')
 
         try:
-            session_duration = init(sess_duration)
+            session_duration = int(sess_duration)
         except Exception:
             session_duration = 0
 
