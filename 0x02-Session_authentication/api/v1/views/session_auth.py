@@ -49,6 +49,7 @@ def logout():
     with the status code 200
     """
     from api.v1.app import auth
+
     deleted = auth.destroy_session(request)
 
     if not deleted:

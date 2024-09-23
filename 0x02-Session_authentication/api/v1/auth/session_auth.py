@@ -66,7 +66,7 @@ class SessionAuth(Auth):
             return False
 
         try:
-            self.user_id_by_session_id[session_id]
+            del self.user_id_by_session_id[session_id]
         except KeyError:
             pass
         return True
