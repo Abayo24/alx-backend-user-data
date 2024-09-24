@@ -9,6 +9,7 @@ def filter_datum(fields: List[str], redaction: str, message: str, separator: str
     """returns the log message obfuscated"""
     return re.sub(f'({"|".join(fields)})=[^{separator}]*', lambda m: f'{m.group(1)}={redaction}', message)  # noqa
 
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
         """
@@ -25,4 +26,4 @@ class RedactingFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         """formats logs, filtering sensitive info"""
         message = super().format(record)
-        return filter_datum(self.fields, self.REDACTION, message, self.SEPARATOR)
+        return filter_datum(self.fields, self.REDACTION, message, self.SEPARATOR)  # noqa
