@@ -10,7 +10,7 @@ from flask_cors import (CORS, cross_origin)
 import os
 from typing import Optional
 from api.v1.auth.auth import Auth
-from api.v1.auth.session_db_auth import SessionDBAuth 
+from api.v1.auth.session_db_auth import SessionDBAuth
 
 
 app = Flask(__name__)
@@ -39,10 +39,12 @@ if getenv('AUTH_TYPE') == 'session_db_auth':
     from api.v1.auth.session_db_auth import SessionDBAuth
     auth = SessionDBAuth()
 
+
 @app.teardown_appcontext
 def close_db(error):
     """ Close the database connection """
     storage.close()
+
 
 @app.before_request
 def before_request() -> Optional[str]:
