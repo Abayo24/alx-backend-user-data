@@ -2,7 +2,7 @@
 """Module SessionDBAuth"""
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
-from models import storage
+import models
 
 
 class SessionDBAuth(SessionExpAuth):
@@ -20,7 +20,7 @@ class SessionDBAuth(SessionExpAuth):
         """Return the user_id associated with a session_id"""
         if not session_id:
             return None
-        all_sessions = storage.all(UserSession)
+        all_sessions = models.storage.all(UserSession)
         for session in all_sessions.values():
             if session.session_id == session_id:
                 return session.user_id
@@ -35,9 +35,9 @@ class SessionDBAuth(SessionExpAuth):
             return False
 
         # Search for session in storage and delete it
-        all_sessions = storage.all(UserSession)
+        all_sessions = models.storage.all(UserSession)
         for session_key, session in all_sessions.items():
             if session.session_id == session_id:
-                storage.delete(session)
+                models.storage.delete(session)
                 return True
         return False
