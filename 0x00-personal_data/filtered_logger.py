@@ -8,6 +8,15 @@ import mysql.connector
 from mysql.connector import connection
 
 
+"""PIIs"""
+PII_FIELDS: Tuple[str, ...] = ("name", "email", "phone", "ssn", "password")
+
+
+def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:  # noqa
+    """returns the log message obfuscated"""
+    return re.sub(f'({"|".join(fields)})=[^{separator}]*', lambda m: f'{m.group(1)}={redaction}', message)  # noqa
+
+
 def get_db() -> connection.MySQLConnection:
     """
     Returns a MySQL database connection using credentials
@@ -16,28 +25,20 @@ def get_db() -> connection.MySQLConnection:
     db_username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
     db_password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
     db_host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
-    db_name = os.getenv('PERSONAL_DATA_DB_NAME', 'holberton')
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME', '')
 
+    # Establish and return the database connection
     try:
-        # Establish and return the database connection
-        return mysql.connector.connect(
+        connection = mysql.connector.connect(
             user=db_username,
             password=db_password,
             host=db_host,
             database=db_name
         )
+        return connection
     except mysql.connector.Error as err:
         print(f"Error: {err}")
         return None
-
-
-"""PIIs"""
-PII_FIELDS: Tuple[str, ...] = ("name", "email", "phone", "ssn", "password")
-
-
-def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:  # noqa
-    """returns the log message obfuscated"""
-    return re.sub(f'({"|".join(fields)})=[^{separator}]*', lambda m: f'{m.group(1)}={redaction}', message)  # noqa
 
 
 class RedactingFormatter(logging.Formatter):
