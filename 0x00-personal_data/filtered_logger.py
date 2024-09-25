@@ -18,13 +18,17 @@ def get_db() -> connection.MySQLConnection:
     db_host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
     db_name = os.getenv('PERSONAL_DATA_DB_NAME', 'holberton')
 
-    # Establish and return the database connection
-    return mysql.connector.connect(
-        user=db_username,
-        password=db_password,
-        host=db_host,
-        database=db_name
-    )
+    try:
+        # Establish and return the database connection
+        return mysql.connector.connect(
+            user=db_username,
+            password=db_password,
+            host=db_host,
+            database=db_name
+        )
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        return None
 
 
 """PIIs"""
