@@ -19,6 +19,6 @@ class User(Base):
 
     def __repr__(self):
         """representation of user object"""
-        return "<User(email='%s', hashed_password='%s', session_id='%s', reset_token='%s')>" % (
+        return "<User(email='%s',hashed_password='%s', session_id='%s', reset_token='%s')>" % (  # noqa
             self.email, self.hashed_password, self.session_id, self.reset_token
         )
