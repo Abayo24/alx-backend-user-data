@@ -8,8 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
-
-
+from sqlalchemy.exc import SQLAlchemyError
 from user import Base, User
 
 
@@ -36,13 +35,15 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """Add a new user to the database"""
-        new_user: User = User(email=email, hashed_password=hashed_password)
-
-        session = self._session
-        session.add(new_user)
-        session.commit()
-
-        return new_user
+        try:
+            new_user: User = User(email=email, hashed_password=hashed_password)
+            session = self._session
+            session.add(new_user)
+            session.commit()
+            return new_user
+        except SQLAlchemyError as e:
+            self._session.rollback()
+            raise e
 
     def find_user_by(self, **kwargs) -> User:
         """Find a user by a given key and value pair"""
